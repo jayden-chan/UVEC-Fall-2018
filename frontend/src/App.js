@@ -5,7 +5,7 @@ import {
   Switch
 } from 'react-router-dom';
 
-import Test from './components/pages/test.js';
+import Main from './components/pages/main.js';
 import Header from './components/header/header.js';
 
 class App extends Component {
@@ -15,7 +15,7 @@ class App extends Component {
         <div className="App">
           <Header />
           <Switch>
-            <Route exact path='/' component={Test} />
+            <Route exact path='/' component={Main} />
           </Switch>
         </div>
       </Router>

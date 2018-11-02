@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import "../../assets/css/custom.min.css";
 
-class Test extends Component {
+class Main extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -33,12 +33,17 @@ class Test extends Component {
   render() {
     return (
         <div className="container-fluid bg">
-            <h1 className="display-1">
-              {this.state.title}
-            </h1>
-      </div>
+          <h1 className="display-1">
+            {this.state.title}
+          </h1>
+          <form>
+            <div className="form-group search">
+              <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Search for anything"></input>
+            </div>
+          </form>
+        </div>
     );
   }
 }
 
-export default Test;
+export default Main;
