@@ -6,12 +6,14 @@ import {
 } from 'react-router-dom';
 
 import Test from './components/pages/test.js';
+import Header from './components/header/header.js';
 
 class App extends Component {
   render() {
     return (
       <Router>
         <div className="App">
+          <Header />
           <Switch>
             <Route exact path='/' component={Test} />
           </Switch>
