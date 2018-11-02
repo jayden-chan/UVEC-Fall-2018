@@ -6,8 +6,12 @@ class Main extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      title: ''
+      title: '',
+      searchValue: ''
     };
+
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   componentDidMount() {
@@ -30,18 +34,43 @@ class Main extends Component {
       });
   }
 
+  handleSubmit(event) {
+    console.log(this.state.searchValue);
+    event.preventDefault();
+  }
+
+  handleChange(event) {
+    const target = event.target;
+    const value = target.value;
+    const name = target.name;
+
+    this.setState({
+      [name]: value
+    });
+  }
+
   render() {
     return (
-        <div className="container-fluid bg">
-          <h1 className="display-1">
-            {this.state.title}
-          </h1>
-          <form>
-            <div className="form-group search">
-              <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Search for anything"></input>
+      <div className="container-fluid bg">
+        <h1 className="display-1">
+          {this.state.title}
+        </h1>
+
+        <form onSubmit={this.handleSubmit}>
+          <div className="form-group">
+            <div className="form-row">
+              <div className="form-group col">
+                <input type="text" name="searchValue" id="inputSearch"
+                  placeholder="Search for anything" className="form-control"
+                  value={this.state.searchValue} onChange={this.handleChange}/>
+              </div>
+              <div className="form-group col-md-auto">
+                <input type="submit" className="btn btn-primary" value="Search" />
+              </div>
             </div>
-          </form>
-        </div>
+          </div>
+        </form>
+      </div>
     );
   }
 }
