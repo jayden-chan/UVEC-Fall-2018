@@ -1,0 +1,28 @@
+.header {
+    background-color: #282c34;
+    width: 100%;
+    display: flex;
+
+    h1 {
+        margin: 10px;
+        color: gray;
+    }
+
+    a {
+        color: gray;
+
+        &:hover {
+            color: gray;
+            text-decoration: none;
+        }
+
+        &:visited {
+            color: gray;
+            text-decoration: none;
+        }
+    }
+
+    button {
+        margin: 10px;
+    }
+}

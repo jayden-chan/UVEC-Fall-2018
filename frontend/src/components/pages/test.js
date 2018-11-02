@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 
-class Test extends Component {
+import "../../assets/css/custom.min.css";
 
+class Test extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      title: 'loading'
+      title: ''
     };
   }
 
@@ -31,12 +32,10 @@ class Test extends Component {
 
   render() {
     return (
-      <div className="container">
-        <div className="jumbotron">
-          <h1 className="display-1">
-            {this.state.title}
-          </h1>
-        </div>
+        <div className="container-fluid bg">
+            <h1 className="display-1">
+              {this.state.title}
+            </h1>
       </div>
     );
   }
