@@ -7,6 +7,7 @@ app.get('/', (req, res) =>  {
 });
 
 app.get('/hello', (req, res) => {
+  console.log('Req');
   res.status(200).send('Hello world!!');
 })
 
