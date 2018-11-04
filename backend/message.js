@@ -1,7 +1,7 @@
 let messages = []
 
-exports.addMessage = (contents) => {
-  messages.push(contents);
+exports.addMessage = (user, contents) => {
+  messages.push({[user]: contents});
 }
 
 exports.getMessages = () => {

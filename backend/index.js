@@ -41,7 +41,10 @@ app.get('/messages', (req, res) =>  {
 });
 
 app.post('/newMessage', (req, res) => {
-  message.addMessage(req.body.message);
+  if (req.body.name === '') {
+    res.status(400).send('No name provided');
+  }
+  message.addMessage(req.body.name, req.body.message);
   res.status(200).send('Good');
 });
 
