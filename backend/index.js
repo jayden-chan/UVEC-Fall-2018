@@ -1,17 +1,23 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 const app = express();
-const port = 3001;
+const port = process.env.PORT | 3001;
+
+app.use(bodyParser.json());
 
 app.get('/', (req, res) =>  {
   res.send('Hello World!');
 });
 
 app.get('/hello', (req, res) => {
-  res.status(200).send('Hello world!');
+  res.status(200).send('Google');
 });
 
-app.get('/test', (req, res) => {
-
+app.post('/newmessage', (req, res) => {
+  // parse jSON
+  //
+  // add to messages
+  res.status(200).send('Google');
 });
 
 app.get('/message', (req, res) =>  {
