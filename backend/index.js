@@ -22,6 +22,6 @@ app.post('/newMessage', (req, res) => {
 	res.status.send(200);
 });
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+app.listen(port, () => console.log(`Example app Listening on port ${port}!`));
 
 
