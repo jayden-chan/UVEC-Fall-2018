@@ -46,4 +46,27 @@ app.post('/newMessage', (req, res) => {
   res.status(200).send('Good');
 });
 
+app.post('/auth', (req, res) => {
+  let result = []
+  client.connect();
+  client.query('SELECT id FROM users WHERE email = ? AND password = crypt(?, gen_salt(\'bf\', 8))', (err, res) => {
+    if (err) throw err;
+
+    for (let row of res.rows) {
+      result.push(row) 
+    }
+    switch (result.length) {
+      case 1:
+        let jwtSecret = ed0Bu7alNujDEMHSFAymJqA3mMtuDlxXaOYKEww4cUemzpUKean2wnCtuvOpbFRF
+        let token = jwt.sign(result[0].toString(), jwtSecret);
+        res.status(201).send(JSON.stringify({token: token}));
+
+      default:
+        res.status(401).send('Bad username or password');
+    }
+
+  });
+  client.end();
+});
+
 app.listen(port, () => console.log(`Example app Listening on port ${port}!`));
