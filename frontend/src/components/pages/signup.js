@@ -23,18 +23,16 @@ class signUp extends Component {
 
   render() {
     return (
-      <div class="container">
         <div class="row justify-content-center">
-            <div class="col-4">
-              <form class="form-signin">
+            <div class="col-6">
+              <form className="form-signin">
                 <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
                 <input type="email" value={this.state.value} onChange={this.handleChange} class="form-control" placeholder="Email address" required autofocus/>
                 <input type="password" value={this.state.value} onChange={this.handleChange} class="form-control" placeholder="Password" required/>
-                <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+                <button className="button" class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
               </form>
             </div>
           </div>
-        </div>
     );
   }
 }
