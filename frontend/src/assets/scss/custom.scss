@@ -1,6 +1,6 @@
 .bg {
   background-color: #282c34;
-  min-height: 100vh;
+  min-height: 100;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -9,8 +9,10 @@
   h1 {
       margin-top: 100px;
   }
+}
 
-
+a {
+	text-color: white;
 }
 
 .chatroom {
@@ -49,4 +51,17 @@
     line-height: 40px;
     color: red;
     text-align: center;
+}
+
+.form-signin {
+	padding-top: 20px;
+
+	input.form-control {
+		margin-top: 10px;
+	}
+
+	button {
+		margin-top: 10px;
+	}
+		
 }
