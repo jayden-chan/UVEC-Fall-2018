@@ -10,6 +10,8 @@
   "license": "MIT",
   "dependencies": {
     "express": "^4.16.4",
-    "pg": "^7.6.0"
+    "jsonwebtoken": "^8.3.0",
+    "pg": "^7.6.0",
+    "sqlstring": "^2.3.1"
   }
 }
