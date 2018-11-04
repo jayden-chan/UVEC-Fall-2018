@@ -7,7 +7,7 @@ The application requires user authentication and securely stores passwords and s
 
 ##Packages
 
-*body-parser 
+* body-parser 
 
 *express
 
