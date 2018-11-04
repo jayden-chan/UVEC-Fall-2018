@@ -25,29 +25,32 @@ app.get('/hello', (req, res) => {
   res.status(200).send('Google');
 });
 
-app.get('/messages', (req, res) =>  {
+app.post('/messages', (req, res) =>  {
+  console.log('got req');
+  jwt.verify(req.body.token, jwtSecret, (err, decoded) => {
+    if (err) {
+      console.log('sending error');
+      res.status(401).send('Auth error');
+      return;
+    }
+
+    console.log('sending');
+    res.send(JSON.stringify({
+      messages: message.getMessages()
+    }));
+  });
+});
+
+app.post('/newMessage', (req, res) => {
   jwt.verify(req.body.token, jwtSecret, (err, decoded) => {
     if (err) {
       res.status(401).send('Auth error');
       return;
     }
+
+    message.addMessage(decoded.first_name, req.body.message);
+    res.status(200).send('Ok');
   });
-
-  res.send(JSON.stringify({
-    messages: message.getMessages()
-  }));
-});
-
-app.post('/newMessage', (req, res) => {
-  jwt.verify(req.body.token, jwtSecret, (err, decoded) => {
-    console.log(decoded);
-  });
-
-  if (req.body.name === '') {
-    res.status(400).send('No name provided');
-  }
-  message.addMessage(req.body.name, req.body.message);
-  res.status(200).send('Good');
 });
 
 app.post('/login', (req, res) => {
