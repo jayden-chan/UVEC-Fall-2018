@@ -1,15 +1,19 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
-const port = process.env.PORT || 3001;
+const port = process.env.PORT || 5000;
+const SqlString = require('sqlstring');
+const jwt = require('jsonwebtoken');
 
-const { Client } = require('pg');
-const client = new Client({
+const { Pool } = require('pg');
+const client = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: true,
 });
 
 const message = require('./message.js');
+
+let jwtSecret = 'ed0Bu7alNujDEMHSFAymJqA3mMtuDlxXaOYKEww4cUemzpUKean2wnCtuvOpbFRF';
 
 app.use(bodyParser.json());
 
@@ -21,26 +25,24 @@ app.get('/hello', (req, res) => {
   res.status(200).send('Google');
 });
 
-app.post('/login', (req, res) => {
-
-  client.connect();
-  client.query('SELECT table_schema,table_name FROM information_schema.tables;', (err, res) => {
-    if (err) throw err;
-    for (let row of res.rows) {
-      console.log(JSON.stringify(row));
+app.get('/messages', (req, res) =>  {
+  jwt.verify(req.body.token, jwtSecret, (err, decoded) => {
+    if (err) {
+      res.status(401).send('Auth error');
+      return;
     }
-    client.end();
   });
 
-});
-
-app.get('/messages', (req, res) =>  {
   res.send(JSON.stringify({
     messages: message.getMessages()
   }));
 });
 
 app.post('/newMessage', (req, res) => {
+  jwt.verify(req.body.token, jwtSecret, (err, decoded) => {
+    console.log(decoded);
+  });
+
   if (req.body.name === '') {
     res.status(400).send('No name provided');
   }
@@ -48,32 +50,30 @@ app.post('/newMessage', (req, res) => {
   res.status(200).send('Good');
 });
 
-app.post('/auth', (req, res) => {
-  let result = []
-  client.connect();
-  client.query('SELECT id FROM users WHERE email = ? AND password = crypt(?, gen_salt(\'bf\', 8))', (err, res) => {
-    if (err) throw err;
+app.post('/login', (req, res) => {
+  const query = SqlString.format('SELECT first_name FROM users WHERE email = ? AND password = crypt(?, password)', [req.body.email, req.body.password])
 
-    for (let row of res.rows) {
-      result.push(row) 
+  client.query(query, (err, response) => {
+    let result = []
+    if (err) {
+      console.log(err);
     }
+
+    for (let row of response.rows) {
+      result.push(row)
+    }
+
     switch (result.length) {
       case 1:
-        let jwtSecret = ed0Bu7alNujDEMHSFAymJqA3mMtuDlxXaOYKEww4cUemzpUKean2wnCtuvOpbFRF
-        let token = jwt.sign(result[0].toString(), jwtSecret);
-        res.status(201).send(JSON.stringify({token: token}));
+        let token = jwt.sign(result[0], jwtSecret);
+        res.status(200).send(JSON.stringify({token: token}));
+        break;
 
       default:
         res.status(401).send('Bad username or password');
+        break;
     }
-
   });
-  client.end();
 });
 
 app.listen(port, () => console.log(`Example app Listening on port ${port}!`));
-
-
-
-
-
