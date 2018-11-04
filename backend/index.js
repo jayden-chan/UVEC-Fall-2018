@@ -39,4 +39,8 @@ app.post('/newmessage', (req, res) => {
   res.status(200).send('Google');
 });
 
+app.get('/message', (req, res) =>  {
+  res.send(JSON.stringify(message.getMessage()))
+});
+
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
