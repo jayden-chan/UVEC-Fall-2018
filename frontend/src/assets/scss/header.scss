@@ -3,7 +3,6 @@
     background-color: #CAD5CA;
     width: 100%;
     display: flex;
-    margin-bottom: 5%;
 
     h1 {
         margin: 10px;
@@ -18,10 +17,6 @@
             text-decoration: none;
         }
 
-        &:visited {
-            color: gray;
-            text-decoration: none;
-        }
     }
 
     button {
