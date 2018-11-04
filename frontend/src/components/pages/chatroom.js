@@ -48,22 +48,19 @@ class Test extends Component {
     return (
       <div class="container">
         <div class="row justify-content-center">
-            <div class="col-4">
+            <div class="col-med-8">
               <div class="row">
                 <form class="form-send">
                   <h1 class="h3 mb-3 font-weight-normal">Chatroom</h1>
-                  <div class="row">
                     <div className="chatroom">
                     hello
-                    </div>
                   </div>
                   <div class="input-group mb-3">
                   <input type="text" class="form-control" placeholder="Type here..." aria-label="Recipient's username" aria-describedby="button-addon2"></input>
                   <div class="input-group-append">
                     <button class="btn btn-outline-secondary" type="button" id="button-addon2">Send</button>
                   </div>
-
-                </div>
+                  </div>
                 </form>
               </div>
             </div>
