@@ -51,3 +51,13 @@ app.post('/newMessage', (req, res) => {
 app.listen(port, () => console.log(`Example app Listening on port ${port}!`));
 
 
+
+exports.login = (req, res) => {
+  if (auth ){
+       let jwtSecret = ed0Bu7alNujDEMHSFAymJqA3mMtuDlxXaOYKEww4cUemzpUKean2wnCtuvOpbFRF
+       let token = jwt.sign(req.body.first_name, jwtSecret);
+       res.status(201).send(JSON.stringify({token: token});
+  } else {
+    res.status(401).send('Bad username or password');
+  }
+};
