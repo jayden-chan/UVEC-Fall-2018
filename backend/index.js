@@ -14,7 +14,7 @@ app.get('/hello', (req, res) => {
 });
 
 app.get('/message', (req, res) =>  {
-  res.send(JSON.stringify(message.getMessage()))
+  res.status(200).send(JSON.stringify(message.getMessage()))
 });
 
 app.post('/newMessage', (req, res) => {
