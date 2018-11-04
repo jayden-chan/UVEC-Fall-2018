@@ -1,10 +1,10 @@
-var message = []
+let messages = []
 
-function addMessage(contents) {
-  message.push(contents)
+exports.addMessage = (user, contents) => {
+  messages.push({[user]: contents});
 }
 
-function getMessage() {
-  return message
+exports.getMessages = () => {
+  return messages;
 }
 
