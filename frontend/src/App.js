@@ -5,7 +5,6 @@ import {
   Switch
 } from 'react-router-dom';
 
-import Main from './components/pages/main.js';
 import Chatroom from './components/pages/chatroom.js';
 import SignUp from './components/pages/signup.js';
 import Header from './components/header/header.js';

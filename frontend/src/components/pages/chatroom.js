@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 
 import "../../assets/css/custom.min.css";
 
-
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
@@ -14,7 +13,8 @@ class Chatroom extends Component {
       title: '',
       messages: [],
       textValue: '',
-      mode: 'loading'
+      mode: 'loading',
+      token: ''
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -58,28 +58,9 @@ class Chatroom extends Component {
       return;
     }
 
-    fetch('https://robotender-api.herokuapp.com/dashboard', {
-      method: 'get',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + token
-      },
-    })
-      .then(res => {
-        if (res.status === 200) {
-          res.json().then(json => {
-            this.setState({company: json.company});
-            this.setState({mode: 'ready'});
-          });
-        }
-        else if (res.status === 401) {
-          localStorage.removeItem('uvec-login-token')
-          this.setState({mode: 'authError'});
-          return
-        } else {
-          res.text().then(text => alert(text));
-        }
-      });
+    this.setState({token: token});
+    this.setState({mode: 'ready'});
+
   }
 
   componentDidMount() {
@@ -95,16 +76,23 @@ class Chatroom extends Component {
     fetch('/messages', {
       method: 'get',
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json'
       },
+      body: JSON.stringify({
+        token: this.state.token
+      })
     })
       .then(res => {
         if (res.status === 200) {
           res.json().then(json => {
             this.setState({messages: json.messages});
+            this.setState({mode: 'ready'});
           });
-        } else if (res.status === 401) {
+        }
+        else if (res.status === 401) {
+          localStorage.removeItem('uvec-login-token')
           this.setState({mode: 'authError'});
+          return
         } else {
           res.text().then(text => alert(text));
         }
@@ -176,7 +164,7 @@ class Chatroom extends Component {
                   {this.getMessageTable()}
                 </div>
                 <div className="input-group mb-3">
-                  <input type="text" className="form-control" placeholder="Type here..." 
+                  <input type="text" className="form-control" placeholder="Type here..."
                     aria-label="Recipient's username" aria-describedby="button-addon2" value={this.state.textValue} onChange={this.handleChange}></input>
                   <div className="input-group-append">
                     <button className="btn btn-outline-secondary" type="submit" id="button-addon2">Send</button>
