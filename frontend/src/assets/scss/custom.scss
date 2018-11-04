@@ -10,9 +10,7 @@
       margin-top: 100px;
   }
 
-  form {
-      width: 50%;
-  }
+
 }
 
 .chatroom {
@@ -20,4 +18,35 @@
   height: 500px;
   width: 100%;
   margin-bottom: 10px;
+}
+
+.loader {
+    border: 5px solid #f3f3f3; /* Light grey */
+    border-top: 5px solid #3498db; /* Blue color */
+    border-radius: 85%;
+    width: 40px;
+    height: 40px;
+    animation: spin 2s linear infinite;
+}
+
+.loader-large {
+    border: 10px solid #f3f3f3; /* Light grey */
+    border-top: 10px solid #3498db; /* Blue color */
+    border-radius: 85%;
+    width: 200px;
+    height: 200px;
+    margin-top: 200px;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.error-label {
+    height: 40px;
+    line-height: 40px;
+    color: red;
+    text-align: center;
 }

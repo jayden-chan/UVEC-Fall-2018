@@ -22,7 +22,6 @@ app.get('/hello', (req, res) => {
 });
 
 app.post('/login', (req, res) => {
-
   client.connect();
   client.query('SELECT table_schema,table_name FROM information_schema.tables;', (err, res) => {
     if (err) throw err;
@@ -31,7 +30,6 @@ app.post('/login', (req, res) => {
     }
     client.end();
   });
-
 });
 
 app.get('/messages', (req, res) =>  {
@@ -49,5 +47,3 @@ app.post('/newMessage', (req, res) => {
 });
 
 app.listen(port, () => console.log(`Example app Listening on port ${port}!`));
-
-

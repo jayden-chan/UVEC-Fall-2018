@@ -6,6 +6,8 @@ import {
 } from 'react-router-dom';
 
 import Main from './components/pages/main.js';
+import Chatroom from './components/pages/chatroom.js';
+import SignUp from './components/pages/signup.js';
 import Header from './components/header/header.js';
 
 class App extends Component {
@@ -15,7 +17,8 @@ class App extends Component {
         <div className="App">
           <Header />
           <Switch>
-            <Route exact path='/' component={Main} />
+            <Route exact path='/' component={SignUp} />
+            <Route exact path='/chatroom' component={Chatroom} />
           </Switch>
         </div>
       </Router>
