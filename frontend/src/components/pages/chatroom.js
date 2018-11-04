@@ -49,12 +49,23 @@ class Test extends Component {
       <div class="container">
         <div class="row justify-content-center">
             <div class="col-4">
-              <form class="form-signin">
-                <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-                <input type="email" value={this.state.value} onChange={this.handleChange} class="form-control" placeholder="Email address" required autofocus/>
-                <input type="password" value={this.state.value} onChange={this.handleChange} class="form-control" placeholder="Password" required/>
-                <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-              </form>
+              <div class="row">
+                <form class="form-send">
+                  <h1 class="h3 mb-3 font-weight-normal">Chatroom</h1>
+                  <div class="row">
+                    <div className="chatroom">
+                    hello
+                    </div>
+                  </div>
+                  <div class="input-group mb-3">
+                  <input type="text" class="form-control" placeholder="Type here..." aria-label="Recipient's username" aria-describedby="button-addon2"></input>
+                  <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button" id="button-addon2">Send</button>
+                  </div>
+
+                </div>
+                </form>
+              </div>
             </div>
           </div>
         </div>
