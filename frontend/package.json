@@ -25,5 +25,13 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-changed": "^3.2.0",
+    "gulp-clean-css": "^3.10.0",
+    "gulp-rename": "^1.4.0",
+    "gulp-sass": "^4.0.2",
+    "gulp-uglify": "^3.0.1"
+  }
 }
