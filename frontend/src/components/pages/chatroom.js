@@ -106,18 +106,19 @@ class Chatroom extends Component {
 
 getMessageTable() {
   return (
-    <table style={{width: '100%'}}>
+    <div className="chatBorder">
+    <table style={{}}>
       <tbody>
         {this.state.messages.map(val =>{
           return (
             <tr>
-              <td>{val.name.toString()}: </td>
-              <td> {val.message.toString()}</td>
+              <td><div className="chatbox"> <b> {val.name.toString()}:</b>  {val.message.toString()} </div> </td>
             </tr>
           )
         })}
       </tbody>
     </table>
+    </div>
   )
 }
 

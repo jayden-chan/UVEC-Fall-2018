@@ -17,10 +17,23 @@ a {
 
 .chatroom {
   border: solid;
+  border-radius: 1.5%;
   height: 500px;
   width: 100%;
   margin-bottom: 10px;
+
 }
+
+.chatbox {
+   word-wrap: break-word; 
+   width: 30%;
+}
+
+.chatBorder {
+    overflow-y: scroll;
+    height: 480px
+}
+
 
 .loader {
     border: 5px solid #f3f3f3; /* Light grey */
