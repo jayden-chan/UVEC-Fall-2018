@@ -20,9 +20,9 @@ Every X seconds the frontend requests the list of messages from the server and u
 File Overview:
 
 The project structure is broken into two folders containing the frontend and server. 
-** Index.js **
+* Index.js
 This is the main server file. It handles authentication, database queries, and houses all the endpoints for the project.
-** Message.js **
+* Message.js
 This is a simply storage location for the array of messages that will be displayed. It contains an accessor and a permutator for the messages array. Each item in the array is an object containing the body of the message and the name of the person that sent the message.
 
 ## Packages
