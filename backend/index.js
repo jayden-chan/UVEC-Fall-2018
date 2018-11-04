@@ -1,13 +1,15 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
-const port = process.env.PORT | 3001;
+const port = process.env.PORT || 3001;
 
 const { Client } = require('pg');
 const client = new Client({
   connectionString: process.env.DATABASE_URL,
   ssl: true,
 });
+
+const message = require('./message.js');
 
 app.use(bodyParser.json());
 
@@ -33,12 +35,14 @@ app.post('/login', (req, res) => {
 });
 
 app.get('/messages', (req, res) =>  {
-  res.send(JSON.stringify(message.getMessage()))
+  res.send(JSON.stringify({
+    messages: message.getMessages()
+  }));
 });
 
 app.post('/newMessage', (req, res) => {
-	message.addMessage(req.body.message);
-	res.status.send(200);
+  message.addMessage(req.body.message);
+  res.status(200).send('Good');
 });
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
