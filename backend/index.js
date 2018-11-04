@@ -32,13 +32,6 @@ app.post('/login', (req, res) => {
 
 });
 
-app.post('/newmessage', (req, res) => {
-  // parse jSON
-  //
-  // add to messages
-  res.status(200).send('Google');
-});
-
 app.get('/message', (req, res) =>  {
   res.send(JSON.stringify(message.getMessage()))
 });
