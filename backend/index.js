@@ -26,18 +26,58 @@ app.get('/hello', (req, res) => {
 });
 
 app.post('/messages', (req, res) =>  {
-  console.log('got req');
   jwt.verify(req.body.token, jwtSecret, (err, decoded) => {
     if (err) {
-      console.log('sending error');
       res.status(401).send('Auth error');
       return;
     }
 
-    console.log('sending');
     res.send(JSON.stringify({
       messages: message.getMessages()
     }));
+  });
+});
+
+app.post('/manager', (req, res) =>  {
+  jwt.verify(req.body.token, jwtSecret, (err, decoded) => {
+    if (err) {
+      res.status(401).send('Auth error');
+      return;
+    }
+
+    if (decoded.position === null) {
+      res.status(401).send('Auth error');
+    }
+
+    if (decoded.position.toLowerCase().includes("manager")) {
+      res.status(200).send(JSON.stringify({
+        messages: message.getManagerMessages()
+      }));
+    } else {
+      res.status(401).send('Auth error');
+    }
+
+  });
+});
+
+app.post('/newManagerMessage', (req, res) => {
+  jwt.verify(req.body.token, jwtSecret, (err, decoded) => {
+    if (err) {
+      res.status(401).send('Auth error');
+      return;
+    }
+
+    if (decoded.position === null) {
+      res.status(401).send('Auth error');
+    }
+
+    if (decoded.position.toLowerCase().includes("manager")) {
+      message.addManagerMessage(decoded.first_name, req.body.message);
+      res.status(200).send('Ok');
+    } else {
+      res.status(401).send('Auth error');
+    }
+
   });
 });
 
@@ -54,7 +94,7 @@ app.post('/newMessage', (req, res) => {
 });
 
 app.post('/login', (req, res) => {
-  const query = SqlString.format('SELECT first_name FROM users WHERE email = ? AND password = crypt(?, password)', [req.body.email, req.body.password])
+  const query = SqlString.format('SELECT first_name, position FROM users WHERE email = ? AND password = crypt(?, password)', [req.body.email, req.body.password])
 
   client.query(query, (err, response) => {
     let result = []
@@ -68,7 +108,7 @@ app.post('/login', (req, res) => {
 
     switch (result.length) {
       case 1:
-        let token = jwt.sign(result[0], jwtSecret);
+        let token = jwt.sign(JSON.stringify(result[0]), jwtSecret);
         res.status(200).send(JSON.stringify({token: token}));
         break;
 

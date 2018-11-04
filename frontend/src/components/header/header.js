@@ -1,33 +1,41 @@
 import React, { Component } from 'react';
-
-import "../../assets/css/header.min.css";
+import { Link } from 'react-router-dom';
 
 class Header extends Component {
-  render() {
-    return (
-      <div className="header">
-        <div className="row" style={{width: '100%'}}>
-          <div className="col">
-            <h1>
-              <a href="/">
-                Messaging App
-              </a>
-            </h1>
-          </div>
-          <div className="col-md-auto" style={{margin: 0}}>
-            <button type="button" className="btn btn-secondary">
-              Link one
-            </button>
-            <button type="button" className="btn btn-secondary">
-              Link two
-            </button>
-            <button type="button" className="btn btn-secondary">
-              Link three
-            </button>
-          </div>
-        </div>
+  renderLinks() {
+    let url = window.location.href
+    if (url.endsWith("chatroom") || url.endsWith("manager")) {
+      return ([
+        <ul key="dashLinks" className="navbar-nav ml-auto">
+          <li key="logoutLink" className="nav-item">
+            <Link to="/logout" className="nav-link">Log Out</Link>
+          </li>
+        </ul>
+      ]);
+    } else {
+      return ([
+        <ul key="normalLinks" className="navbar-nav ml-auto">
+          <li key="loginLink" className="nav-item">
+            <Link to="/" className="nav-link">Login</Link>
+          </li>
+        </ul>
+      ]);
+    }
+  }
 
-      </div>
+  render() {
+    let links = this.renderLinks();
+    return (
+      <header>
+        <div className="container-fluid" style={{padding:0}}>
+          <nav className="navbar navbar-expand-md navbar-dark bg-primary">
+            <a className="navbar-brand" href="/">Messaging App</a>
+            <div className="collapse navbar-collapse" id="navbarNav">
+              {links}
+            </div>
+          </nav>
+        </div>
+      </header>
     );
   }
 }

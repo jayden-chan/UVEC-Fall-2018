@@ -58,9 +58,13 @@ class Chatroom extends Component {
       return;
     }
 
-    console.log(token);
-    this.setState({token: token});
-    this.setState({mode: 'ready'});
+    if (token === null) {
+      this.setState({mode: 'unauthorized'});
+      clearInterval(this.updateInterval);
+    } else {
+      this.setState({token: token});
+      this.setState({mode: 'ready'});
+    }
 
   }
 
