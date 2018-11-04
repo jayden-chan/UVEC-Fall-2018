@@ -10,7 +10,7 @@ class Header extends Component {
           <div className="col">
             <h1>
               <a href="/">
-                App Name
+                Messaging App
               </a>
             </h1>
           </div>
