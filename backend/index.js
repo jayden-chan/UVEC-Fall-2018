@@ -14,4 +14,8 @@ app.get('/test', (req, res) => {
 
 });
 
+app.get('/message', (req, res) =>  {
+  res.send(JSON.stringify(message.getMessage))
+});
+
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
