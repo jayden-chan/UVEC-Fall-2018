@@ -17,6 +17,8 @@ Upon login the clients credentials are hashes with SHA256 and compared against t
 When the user sends a message their JWT is parsed to ensure the authenticity of the user and their message is added to an array containing all the messages.
 
 Every X seconds the frontend requests the list of messages from the server and updates the chatroom with any new messages.
+
+There is a separate chatroom, one for general purpose use, and another for managers only. When a user access the manager chatroom their token if checked. If they are a non-manager then the chat is blocked and they are prompted to go back to the login page
 File Overview:
 
 The project structure is broken into two folders containing the frontend and server. 
