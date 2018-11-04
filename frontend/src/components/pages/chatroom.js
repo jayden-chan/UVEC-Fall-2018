@@ -33,7 +33,7 @@ class Chatroom extends Component {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        name: "Jayden",
+        token: this.state.token,
         message: this.state.textValue
       })
     })
@@ -58,6 +58,7 @@ class Chatroom extends Component {
       return;
     }
 
+    console.log(token);
     this.setState({token: token});
     this.setState({mode: 'ready'});
 
@@ -73,36 +74,40 @@ class Chatroom extends Component {
   }
 
   async getMessages() {
-    fetch('/messages', {
-      method: 'get',
+    if (this.state.token === null) {
+      console.log('no token');
+      return;
+    }
+
+    let theBody = JSON.stringify({token: this.state.token});
+
+    const res = await fetch('/messages', {
+      method: 'post',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({
-        token: this.state.token
-      })
+      body: theBody,
     })
-      .then(res => {
-        if (res.status === 200) {
-          res.json().then(json => {
-            this.setState({messages: json.messages});
-            this.setState({mode: 'ready'});
-          });
-        }
-        else if (res.status === 401) {
-          localStorage.removeItem('uvec-login-token')
-          this.setState({mode: 'authError'});
-          return
-        } else {
-          res.text().then(text => alert(text));
-        }
-      });
-  }
 
-  getMessageTable() {
-    return (
-      <table style={{width: '100%'}}>
-        <tbody>
+    if (res.status === 200) {
+      res.json().then(json => {
+        this.setState({messages: json.messages});
+        this.setState({mode: 'ready'});
+      });
+    }
+    else if (res.status === 401) {
+      localStorage.removeItem('uvec-login-token')
+      this.setState({mode: 'authError'});
+      return
+    } else {
+      res.text().then(text => alert(text));
+    }
+}
+
+getMessageTable() {
+  return (
+    <table style={{width: '100%'}}>
+      <tbody>
         {this.state.messages.map(val =>{
           return (
             <tr>
@@ -112,69 +117,69 @@ class Chatroom extends Component {
           )
         })}
       </tbody>
-      </table>
+    </table>
+  )
+}
+
+render() {
+  if (this.state.mode === 'loading') {
+    return (
+      <div>
+        <div className="d-flex justify-content-center">
+          <div className='loader-large'></div>
+        </div>
+      </div>
+    )
+  } else if (this.state.mode === 'unauthorized') {
+    return (
+      <div>
+        <div className="container">
+          <div className="row" style={{marginTop: 100}}>
+            <div className="col-md" style={{marginTop: 100}}>
+              <h1 className="display-4">Unauthorized</h1>
+              <p>You are not logged in.</p>
+              <a href="/">Go to the login page</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  } else if (this.state.mode === 'authError') {
+    return (
+      <div>
+        <div className="container">
+          <div className="row" style={{marginTop: 100}}>
+            <div className="col-md" style={{marginTop: 100}}>
+              <h1 className="display-4">Authorization Error</h1>
+              <p>Please log in again.</p>
+              <a href="/">Go to the login page</a>
+            </div>
+          </div>
+        </div>
+      </div>
     )
   }
 
-  render() {
-    if (this.state.mode === 'loading') {
-      return (
-        <div>
-          <div className="d-flex justify-content-center">
-            <div className='loader-large'></div>
+  return (
+    <div className="container">
+      <div className="row justify-content-center">
+        <form className="form-send" style={{width: '100%'}} onSubmit={this.handleSubmit}>
+          <h1 className="h3 mb-3 font-weight-normal">Chatroom</h1>
+          <div className="chatroom">
+            {this.getMessageTable()}
           </div>
-        </div>
-      )
-    } else if (this.state.mode === 'unauthorized') {
-      return (
-        <div>
-          <div className="container">
-              <div className="row" style={{marginTop: 100}}>
-                <div className="col-md" style={{marginTop: 100}}>
-                  <h1 className="display-4">Unauthorized</h1>
-                  <p>You are not logged in.</p>
-                  <a href="/">Go to the login page</a>
-                </div>
-              </div>
+          <div className="input-group mb-3">
+            <input type="text" className="form-control" placeholder="Type here..."
+              aria-label="Recipient's username" aria-describedby="button-addon2" value={this.state.textValue} onChange={this.handleChange}></input>
+            <div className="input-group-append">
+              <button className="btn btn-outline-secondary" type="submit" id="button-addon2">Send</button>
+            </div>
           </div>
-        </div>
-      )
-    } else if (this.state.mode === 'authError') {
-      return (
-        <div>
-          <div className="container">
-              <div className="row" style={{marginTop: 100}}>
-                <div className="col-md" style={{marginTop: 100}}>
-                  <h1 className="display-4">Authorization Error</h1>
-                  <p>Please log in again.</p>
-                  <a href="/">Go to the login page</a>
-                </div>
-              </div>
-          </div>
-        </div>
-      )
-    }
-
-    return (
-      <div className="container">
-        <div className="row justify-content-center">
-              <form className="form-send" style={{width: '100%'}} onSubmit={this.handleSubmit}>
-                <h1 className="h3 mb-3 font-weight-normal">Chatroom</h1>
-                <div className="chatroom">
-                  {this.getMessageTable()}
-                </div>
-                <div className="input-group mb-3">
-                  <input type="text" className="form-control" placeholder="Type here..."
-                    aria-label="Recipient's username" aria-describedby="button-addon2" value={this.state.textValue} onChange={this.handleChange}></input>
-                  <div className="input-group-append">
-                    <button className="btn btn-outline-secondary" type="submit" id="button-addon2">Send</button>
-                  </div>
-                </div>
-              </form>
-        </div>
+        </form>
       </div>
-    );
-  }
+    </div>
+  );
+}
 }
 
 export default Chatroom;
