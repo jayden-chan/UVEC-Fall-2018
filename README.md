@@ -1,4 +1,4 @@
-# University of Victoria Engineering Competition Project
+# UVic Engineering Competition Project
 ## Authors
 1. Jayden Chan
 2. Cobey Hollier
