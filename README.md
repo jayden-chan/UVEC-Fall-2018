@@ -11,6 +11,11 @@ Competition in Winnipeg.
  * Kahvi Patel
  * Ahnaf Ahmed
 
+## Screenshots
+![alt text](/img/img1.png "Chat room")
+![alt text](/img/img2.png "Login screen")
+![alt text](/img/img3.png "Manager-only chat room")
+
 ## Implementation
 This application requires user authentication and securely stores passwords and sensitive data.
 
